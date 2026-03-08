@@ -17,6 +17,10 @@ try {
         ]
     );
 } catch (PDOException $e) {
-    // Handle connection errors gracefully
-    die('Database connection failed: ' . htmlspecialchars($e->getMessage()));
+    // Log error internally
+    $logFile = __DIR__ . '/../database/db_errors.log';
+    $errorMsg = date('Y-m-d H:i:s') . ' - DB connection error: ' . $e->getMessage() . "\n";
+    file_put_contents($logFile, $errorMsg, FILE_APPEND | LOCK_EX);
+    // Show generic error message to user
+    die('Database connection failed. Please try again later.');
 }
