@@ -15,26 +15,28 @@ require_once __DIR__.'/config.php';
     <link rel="stylesheet" href="/Australian-Party-Website-Template/assets/css/style.css">
 </head>
 <body>
+<!-- Skip to content link for accessibility -->
+<a href="#main-content" class="skip-link" tabindex="0">Skip to main content</a>
 <!-- Site header and navigation -->
 <header role="banner" aria-label="Site Header">
-    <nav aria-label="Main Navigation">
-        <ul class="nav">
-            <li class="site-logo"><a href="/Australian-Party-Website-Template/index.php" aria-label="Home"><!-- You can replace this text with an <img> for a logo -->
+    <nav aria-label="Main Navigation" role="navigation">
+        <ul class="nav" role="menubar">
+            <li class="site-logo"><a href="/Australian-Party-Website-Template/index.php" aria-label="Home" role="menuitem"><!-- You can replace this text with an <img> for a logo -->
                 <?= htmlspecialchars($SITE_NAME) ?>
             </a></li>
-            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/about.php" class="nav-link">About</a></li>
-            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/policies.php" class="nav-link">Policies</a></li>
-            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/candidates.php" class="nav-link">Candidates</a></li>
-            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/news.php" class="nav-link">News</a></li>
-            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/events.php" class="nav-link">Events</a></li>
-            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/volunteer.php" class="nav-link">Volunteer</a></li>
-            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/donate.php" class="nav-link">Donate</a></li>
-            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/contact.php" class="nav-link">Contact</a></li>
-            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/transparency.php" class="nav-link">Transparency</a></li>
+            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/about.php" class="nav-link" role="menuitem">About</a></li>
+            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/policies.php" class="nav-link" role="menuitem">Policies</a></li>
+            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/candidates.php" class="nav-link" role="menuitem">Candidates</a></li>
+            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/news.php" class="nav-link" role="menuitem">News</a></li>
+            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/events.php" class="nav-link" role="menuitem">Events</a></li>
+            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/volunteer.php" class="nav-link" role="menuitem">Volunteer</a></li>
+            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/donate.php" class="nav-link" role="menuitem">Donate</a></li>
+            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/contact.php" class="nav-link" role="menuitem">Contact</a></li>
+            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/transparency.php" class="nav-link" role="menuitem">Transparency</a></li>
             <?php
             require_once __DIR__.'/auth.php';
             if (is_logged_in() && in_array(current_user_role(), ['admin', 'webmaster'])): ?>
-                <li class="nav-list-item"><a href="/Australian-Party-Website-Template/admin/index.php" class="nav-link">Admin</a></li>
+                <li class="nav-list-item"><a href="/Australian-Party-Website-Template/admin/index.php" class="nav-link" role="menuitem">Admin</a></li>
             <?php endif; ?>
         </ul>
     </nav>
