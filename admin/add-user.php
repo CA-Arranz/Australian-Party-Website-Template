@@ -32,10 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="container">
     <h2>Add New User</h2>
     <?php if ($error): ?>
-        <div class="error"><?= htmlspecialchars($error) ?></div>
+        <div class="error-message"><?= htmlspecialchars($error) ?></div>
     <?php endif; ?>
     <?php if ($success): ?>
-        <div class="success"><?= htmlspecialchars($success) ?></div>
+        <div class="success-message"><?= htmlspecialchars($success) ?></div>
     <?php endif; ?>
     <form method="post" action="">
         <label for="username">Username:</label>

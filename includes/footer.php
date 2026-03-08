@@ -17,13 +17,13 @@ require_once __DIR__.'/config.php';
         <!-- Footer navigation links -->
         <nav aria-label="Footer Navigation">
             <ul class="footer-nav">
-                <li><a href="/campaign-control-platform/privacy.php">Privacy Policy</a></li>
-                <li><a href="/campaign-control-platform/terms.php">Terms of Use</a></li>
+                <li><a href="/Australian-Party-Website-Template/privacy.php">Privacy Policy</a></li>
+                <li><a href="/Australian-Party-Website-Template/terms.php">Terms of Use</a></li>
             </ul>
         </nav>
     </div>
 </footer>
 <!-- Site-wide JavaScript -->
-<script src="/campaign-control-platform/assets/js/app.js"></script>
+<script src="/Australian-Party-Website-Template/assets/js/app.js"></script>
 </body>
 </html>

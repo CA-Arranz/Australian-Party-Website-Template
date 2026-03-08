@@ -12,25 +12,30 @@ require_once __DIR__.'/config.php';
     <!-- Site title from config -->
     <title><?= htmlspecialchars($SITE_NAME) ?></title>
     <!-- Global stylesheet -->
-    <link rel="stylesheet" href="/full-political-campaign-platform/assets/css/style.css">
+    <link rel="stylesheet" href="/Australian-Party-Website-Template/assets/css/style.css">
 </head>
 <body>
 <!-- Site header and navigation -->
 <header role="banner" aria-label="Site Header">
     <nav aria-label="Main Navigation">
         <ul class="nav">
-            <!-- Navigation links to main site pages -->
-            <li><a href="/full-political-campaign-platform/index.php">Home</a></li>
-            <li><a href="/full-political-campaign-platform/about.php">About</a></li>
-            <li><a href="/full-political-campaign-platform/policies.php">Policies</a></li>
-            <li><a href="/full-political-campaign-platform/candidates.php">Candidates</a></li>
-            <li><a href="/full-political-campaign-platform/news.php">News</a></li>
-            <li><a href="/full-political-campaign-platform/events.php">Events</a></li>
-            <li><a href="/full-political-campaign-platform/volunteer.php">Volunteer</a></li>
-            <li><a href="/full-political-campaign-platform/donate.php">Donate</a></li>
-            <li><a href="/full-political-campaign-platform/contact.php">Contact</a></li>
-            <li><a href="/full-political-campaign-platform/transparency.php">Transparency</a></li>
-            <li><a href="/full-political-campaign-platform/admin/index.php">Admin</a></li>
+            <li class="site-logo"><a href="/Australian-Party-Website-Template/index.php" aria-label="Home"><!-- You can replace this text with an <img> for a logo -->
+                <?= htmlspecialchars($SITE_NAME) ?>
+            </a></li>
+            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/about.php" class="nav-link">About</a></li>
+            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/policies.php" class="nav-link">Policies</a></li>
+            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/candidates.php" class="nav-link">Candidates</a></li>
+            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/news.php" class="nav-link">News</a></li>
+            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/events.php" class="nav-link">Events</a></li>
+            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/volunteer.php" class="nav-link">Volunteer</a></li>
+            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/donate.php" class="nav-link">Donate</a></li>
+            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/contact.php" class="nav-link">Contact</a></li>
+            <li class="nav-list-item"><a href="/Australian-Party-Website-Template/transparency.php" class="nav-link">Transparency</a></li>
+            <?php
+            require_once __DIR__.'/auth.php';
+            if (is_logged_in() && in_array(current_user_role(), ['admin', 'webmaster'])): ?>
+                <li class="nav-list-item"><a href="/Australian-Party-Website-Template/admin/index.php" class="nav-link">Admin</a></li>
+            <?php endif; ?>
         </ul>
     </nav>
 </header>

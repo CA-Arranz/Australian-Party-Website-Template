@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="container">
     <h2>Webmaster Login</h2>
     <?php if ($error): ?>
-        <div class="error"><?= htmlspecialchars($error) ?></div>
+        <div class="error-message"><?= htmlspecialchars($error) ?></div>
     <?php endif; ?>
     <form method="post" action="">
         <label for="username">Username:</label>

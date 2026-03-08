@@ -25,21 +25,40 @@ require_once __DIR__.'/includes/csrf.php';
 
     <?php
     // Handle contact form submission
+    $contactError = '';
+    $contactSuccess = '';
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'], $_POST['email'], $_POST['message'], $_POST['csrf_token'])) {
         // Validate CSRF token
-        if (csrf_check($_POST['csrf_token'])) {
-            // Store message in the database
-            $stmt = $pdo->prepare('INSERT INTO contact_messages (name, email, message) VALUES (?, ?, ?)');
-            $stmt->execute([
-                htmlspecialchars($_POST['name']),
-                htmlspecialchars($_POST['email']),
-                htmlspecialchars($_POST['message'])
-            ]);
-            echo '<p>Thank you for contacting us!</p>';
+        if (!csrf_check($_POST['csrf_token'])) {
+            $contactError = 'Invalid CSRF token.';
         } else {
-            // CSRF token invalid
-            echo '<p>Invalid CSRF token.</p>';
+            $name = trim($_POST['name']);
+            $email = trim($_POST['email']);
+            $message = trim($_POST['message']);
+            // Validate name (letters, spaces, min 2, max 50)
+            if (!preg_match('/^[a-zA-Z\s\-]{2,50}$/', $name)) {
+                $contactError = 'Please enter a valid name (letters, spaces, 2-50 chars).';
+            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $contactError = 'Please enter a valid email address.';
+            } elseif (strlen($message) < 10 || strlen($message) > 1000) {
+                $contactError = 'Message must be between 10 and 1000 characters.';
+            } else {
+                // Store message in the database
+                $stmt = $pdo->prepare('INSERT INTO contact_messages (name, email, message) VALUES (?, ?, ?)');
+                $stmt->execute([
+                    htmlspecialchars($name),
+                    htmlspecialchars($email),
+                    htmlspecialchars($message)
+                ]);
+                $contactSuccess = 'Thank you for contacting us!';
+            }
         }
+    }
+    if ($contactError) {
+        echo '<div class="error-message" role="alert">' . htmlspecialchars($contactError) . '</div>';
+    }
+    if ($contactSuccess) {
+        echo '<div class="success-message" role="status">' . htmlspecialchars($contactSuccess) . '</div>';
     }
     ?>
 </section>

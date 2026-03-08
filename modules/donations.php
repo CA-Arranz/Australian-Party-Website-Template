@@ -8,12 +8,12 @@ require_once __DIR__.'/../includes/db.php';
 class Donations {
     // Register a new donation
     public static function register($data) {
-        $stmt = $GLOBALS['pdo']->prepare('INSERT INTO donations (donor_name, amount, payment_method, public_disclosure) VALUES (?, ?, ?, ?)');
+        $stmt = $GLOBALS['pdo']->prepare('INSERT INTO donations (donorName, amount, paymentMethod, publicDisclosure) VALUES (?, ?, ?, ?)');
         $stmt->execute([
-            $data['donor_name'],
+            $data['donorName'],
             $data['amount'],
-            $data['payment_method'],
-            $data['public_disclosure']
+            $data['paymentMethod'],
+            $data['publicDisclosure']
         ]);
         return $GLOBALS['pdo']->lastInsertId();
     }
@@ -26,7 +26,7 @@ class Donations {
 
     // Get public disclosures
     public static function getPublic() {
-        $stmt = $GLOBALS['pdo']->query('SELECT donor_name, amount, date FROM donations WHERE public_disclosure = 1 ORDER BY date DESC');
+        $stmt = $GLOBALS['pdo']->query('SELECT donorName, amount, date FROM donations WHERE publicDisclosure = 1 ORDER BY date DESC');
         return $stmt->fetchAll();
     }
 }

@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h2>Admin Login</h2>
     <!-- Display error message if login fails -->
     <?php if ($error): ?>
-        <div class="error"><?= htmlspecialchars($error) ?></div>
+        <div class="error-message"><?= htmlspecialchars($error) ?></div>
     <?php endif; ?>
     <!-- Login form -->
     <form method="post" action="">

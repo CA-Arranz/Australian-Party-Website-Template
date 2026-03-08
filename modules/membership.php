@@ -8,17 +8,17 @@ require_once __DIR__.'/../includes/db.php';
 class Membership {
     // Register a new member
     public static function register($data) {
-        $stmt = $GLOBALS['pdo']->prepare('INSERT INTO members (full_name, address, email, date_of_birth, phone, is_elector, not_member_of_other_party, agreed_to_rules, password_hash) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        $stmt = $GLOBALS['pdo']->prepare('INSERT INTO members (fullName, address, email, dateOfBirth, phone, isElector, notMemberOfOtherParty, agreedToRules, passwordHash) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
         $stmt->execute([
-            $data['full_name'],
+            $data['fullName'],
             $data['address'],
             $data['email'],
-            $data['date_of_birth'],
+            $data['dateOfBirth'],
             $data['phone'],
-            $data['is_elector'],
-            $data['not_member_of_other_party'],
-            $data['agreed_to_rules'],
-            $data['password_hash']
+            $data['isElector'],
+            $data['notMemberOfOtherParty'],
+            $data['agreedToRules'],
+            $data['passwordHash']
         ]);
         return $GLOBALS['pdo']->lastInsertId();
     }
@@ -37,8 +37,8 @@ class Membership {
     }
 
     // Update verification status
-    public static function verify($member_id, $status) {
-        $stmt = $GLOBALS['pdo']->prepare('UPDATE members SET verification_status = ? WHERE id = ?');
-        $stmt->execute([$status, $member_id]);
+    public static function verify($memberId, $status) {
+        $stmt = $GLOBALS['pdo']->prepare('UPDATE members SET verificationStatus = ? WHERE id = ?');
+        $stmt->execute([$status, $memberId]);
     }
 }
