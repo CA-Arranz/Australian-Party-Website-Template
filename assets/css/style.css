@@ -1,0 +1,380 @@
+/*
+Dark mode styles
+Overrides default colors for accessibility and visual comfort.
+Header, footer, main, container, navigation, buttons, form fields, labels, and footer links are styled for dark backgrounds.
+*/
+@media (prefers-color-scheme: dark) {
+    /* Body background and text color for dark mode */
+    body {
+        background: #181a1b !important;
+        color: #e0e0e0;
+    }
+    /* Header and footer backgrounds for dark mode */
+    header, footer {
+        background: #181a1b !important;
+        color: #e0e0e0 !important;
+    }
+    /* Main content and container backgrounds for dark mode */
+    main, .container {
+        background: #23272e !important;
+        color: #e0e0e0;
+    }
+    /* Navigation links for dark mode */
+    .nav a {
+        color: #e0e0e0;
+        background: #23272e;
+    }
+    /* Navigation link hover/focus for dark mode */
+    .nav a:focus,
+    .nav a:hover {
+        background: #333a45;
+        outline: 2px solid #ffd700;
+    }
+    /* Button and .btn styles for dark mode */
+    button, .btn {
+        background: #1a237e !important;
+        color: #fff !important;
+    }
+    /* Button hover for dark mode */
+    button:hover, .btn:hover {
+        background: #283593 !important;
+    }
+    /* Form fields for dark mode */
+    input, select, textarea {
+        background: #23272e;
+        color: #e0e0e0;
+        border: 1px solid #444b57;
+    }
+    /* Label color for dark mode */
+    label {
+        color: #ffd700;
+    }
+    /* Footer navigation links for dark mode */
+    .footer-nav a {
+        color: #ffd700;
+    }
+}
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #181a1b !important;
+        color: #e0e0e0;
+    }
+    header, footer {
+        background: #181a1b !important;
+        color: #e0e0e0 !important;
+    }
+    main, .container {
+        background: #23272e !important;
+        color: #e0e0e0;
+    }
+    .nav a {
+        color: #e0e0e0;
+        background: #23272e;
+    }
+    .nav a:focus,
+    .nav a:hover {
+        background: #333a45;
+        outline: 2px solid #ffd700;
+    }
+    button, .btn {
+        background: #333a45;
+        color: #ffd700;
+    }
+    button:hover, .btn:hover {
+        background: #444b57;
+    }
+    input, select, textarea {
+        background: #23272e;
+        color: #e0e0e0;
+        border: 1px solid #444b57;
+    }
+    label {
+        color: #ffd700;
+    }
+    .footer-nav a {
+        color: #ffd700;
+    }
+}
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #181a1b !important;
+        color: #e0e0e0;
+    }
+    header, footer {
+        background: #181a1b;
+        color: #e0e0e0;
+    }
+    main, .container {
+        background: #23272e !important;
+        color: #e0e0e0;
+    }
+    .nav a {
+        color: #e0e0e0;
+        background: #23272e;
+    }
+    .nav a:focus,
+    .nav a:hover {
+        background: #333a45;
+        outline: 2px solid #ffd700;
+    }
+    button, .btn {
+        background: #333a45;
+        color: #ffd700;
+    }
+    button:hover, .btn:hover {
+        background: #444b57;
+    }
+    input, select, textarea {
+        background: #23272e;
+        color: #e0e0e0;
+        border: 1px solid #444b57;
+    }
+    label {
+        color: #ffd700;
+    }
+    .footer-nav a {
+        color: #ffd700;
+    }
+}
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #181a1b;
+        color: #e0e0e0;
+    }
+    header, footer {
+        background: #181a1b;
+        color: #e0e0e0;
+    }
+    main {
+        background: #23272e;
+        color: #e0e0e0;
+    }
+    .nav a {
+        color: #e0e0e0;
+        background: #23272e;
+    }
+    .nav a:focus,
+    .nav a:hover {
+        background: #333a45;
+        outline: 2px solid #ffd700;
+    }
+    button, .btn {
+        background: #333a45;
+        color: #ffd700;
+    }
+    button:hover, .btn:hover {
+        background: #444b57;
+    }
+    input, select, textarea {
+        background: #23272e;
+        color: #e0e0e0;
+        border: 1px solid #444b57;
+    }
+    label {
+        color: #ffd700;
+    }
+    .footer-nav a {
+        color: #ffd700;
+    }
+}
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #181a1b;
+        color: #e0e0e0;
+    }
+    header, footer {
+        background: #181a1b;
+        color: #e0e0e0;
+    }
+    .nav a {
+        color: #e0e0e0;
+        background: #23272e;
+    }
+    .nav a:focus,
+    .nav a:hover {
+        background: #333a45;
+        outline: 2px solid #ffd700;
+    }
+    button, .btn {
+        background: #333a45;
+        color: #ffd700;
+    }
+    button:hover, .btn:hover {
+        background: #444b57;
+    }
+    input, select, textarea {
+        background: #23272e;
+        color: #e0e0e0;
+        border: 1px solid #444b57;
+    }
+    label {
+        color: #ffd700;
+    }
+    .footer-nav a {
+        color: #ffd700;
+    }
+}
+/* style.css - Campaign Control Platform */
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #181a1b;
+        color: #e0e0e0;
+    }
+    header, footer {
+        background: #23272e;
+        color: #e0e0e0;
+    }
+    .nav a {
+        color: #e0e0e0;
+        background: #23272e;
+    }
+    .nav a:focus,
+    .nav a:hover {
+        background: #333a45;
+        outline: 2px solid #ffd700;
+    }
+    button, .btn {
+        background: #333a45;
+        color: #ffd700;
+    }
+    button:hover, .btn:hover {
+        background: #444b57;
+    }
+    input, select, textarea {
+        background: #23272e;
+        color: #e0e0e0;
+        border: 1px solid #444b57;
+    }
+    label {
+        color: #ffd700;
+    }
+    .footer-nav a {
+        color: #ffd700;
+    }
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #fff;
+    color: #222;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: #1a237e;
+    color: #fff;
+    padding: 1rem 0;
+}
+
+.nav {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav li {
+    margin: 0 1rem;
+}
+
+.nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.nav a:focus,
+.nav a:hover {
+    background: #283593;
+    outline: 2px solid #ffd700;
+}
+
+main {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+footer {
+    background: #1a237e;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+.footer-nav {
+    display: inline-flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.footer-nav li {
+    margin: 0 0.5rem;
+}
+
+.footer-nav a {
+    color: #ffd700;
+    text-decoration: underline;
+    font-size: 1rem;
+}
+
+button, .btn {
+    background: #ffd700;
+    color: #1a237e;
+    border: none;
+    border-radius: 4px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0.5rem 0;
+    transition: background 0.2s;
+}
+
+button:focus, .btn:focus {
+    outline: 2px solid #283593;
+}
+
+button:hover, .btn:hover {
+    background: #fff176;
+}
+
+input, select, textarea {
+    font-size: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+[aria-label], [role] {
+    outline: none;
+}
+
+@media (max-width: 700px) {
+    main {
+        padding: 0.5rem;
+    }
+    .nav {
+        flex-direction: column;
+        align-items: center;
+    }
+    .nav li {
+        margin: 0.5rem 0;
+    }
+}

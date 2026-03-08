@@ -1,0 +1,21 @@
+# PHP
+*.log
+*.tmp
+*.bak
+/vendor/
+.env
+
+# XAMPP/Local
+.DS_Store
+Thumbs.db
+
+# Node/npm (if used)
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
