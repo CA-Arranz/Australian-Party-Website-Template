@@ -13,16 +13,39 @@ require_once __DIR__.'/modules/policies.php';
 $newsletter_error = '';
 $newsletter_success = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newsletter_email'])) {
-    $email = trim($_POST['newsletter_email']);
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $newsletter_error = 'Please enter a valid email address.';
-    } else if (!csrf_check($_POST['csrf_token'] ?? '')) {
-        $newsletter_error = 'Invalid form submission.';
+    // Rate limiting: max 5 submissions per IP per hour
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $rateLimitFile = sys_get_temp_dir() . '/newsletter_rate_limit_' . md5($ip);
+    $rateLimit = @json_decode(@file_get_contents($rateLimitFile), true) ?: ['count'=>0,'time'=>time()];
+    if (time() - $rateLimit['time'] > 3600) {
+        $rateLimit = ['count'=>0,'time'=>time()];
+    }
+    if ($rateLimit['count'] >= 5) {
+        $newsletter_error = 'Too many submissions from your IP. Please try again later.';
     } else {
-        // Insert into newsletter_subscribers table
-        $stmt = $pdo->prepare('INSERT IGNORE INTO newsletter_subscribers (email, subscribed_at) VALUES (?, NOW())');
-        $stmt->execute([$email]);
-        $newsletter_success = 'Thank you for subscribing!';
+        $email = trim($_POST['newsletter_email']);
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $newsletter_error = 'Please enter a valid email address.';
+        } else if (!csrf_check($_POST['csrf_token'] ?? '')) {
+            $newsletter_error = 'Invalid form submission.';
+        } else {
+            // Validate reCAPTCHA
+            $recaptchaResponse = $_POST['g-recaptcha-response'] ?? '';
+            $recaptchaSecret = 'YOUR_RECAPTCHA_SECRET_KEY';
+            $recaptchaVerify = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($recaptchaSecret) . '&response=' . urlencode($recaptchaResponse) . '&remoteip=' . urlencode($ip));
+            $recaptchaResult = json_decode($recaptchaVerify, true);
+            if (!$recaptchaResult['success']) {
+                $newsletter_error = 'CAPTCHA verification failed. Please try again.';
+            } else {
+                // Insert into newsletter_subscribers table
+                $stmt = $pdo->prepare('INSERT IGNORE INTO newsletter_subscribers (email, subscribed_at) VALUES (?, NOW())');
+                $stmt->execute([$email]);
+                $newsletter_success = 'Thank you for subscribing!';
+                // Update rate limit
+                $rateLimit['count']++;
+                file_put_contents($rateLimitFile, json_encode($rateLimit));
+            }
+        }
     }
 }
 
@@ -82,8 +105,11 @@ if (count($featured_policies) > 3) $featured_policies = array_slice($featured_po
         <?= csrf_input() ?>
         <label for="newsletter_email">Email:</label>
         <input type="email" id="newsletter_email" name="newsletter_email" required aria-required="true" autocomplete="email">
+        <!-- Google reCAPTCHA v2 widget -->
+        <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
         <button type="submit" class="btn">Subscribe</button>
     </form>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <?php if ($newsletter_error): ?>
         <div class="error-message" role="alert"><?= htmlspecialchars($newsletter_error) ?></div>
     <?php endif; ?>
