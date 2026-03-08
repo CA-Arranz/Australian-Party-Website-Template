@@ -6,19 +6,22 @@ session_start();
 require_once '../includes/auth.php';
 require_once '../includes/header.php';
 
+// Robust input validation and output escaping
 $error = '';
-// Handle login form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'] ?? '';
+    $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
-    // Attempt login
-    if (login($username, $password)) {
-        // Redirect to admin dashboard on success
-        header('Location: index.php');
-        exit;
+    if (!$username || !preg_match('/^[a-zA-Z0-9_\-]{3,30}$/', $username)) {
+        $error = 'Please enter a valid username.';
+    } elseif (!$password || strlen($password) < 8) {
+        $error = 'Password must be at least 8 characters.';
     } else {
-        // Show error message on failure
-        $error = 'Invalid username or password.';
+        if (login($username, $password)) {
+            header('Location: index.php');
+            exit;
+        } else {
+            $error = 'Invalid username or password.';
+        }
     }
 }
 ?>

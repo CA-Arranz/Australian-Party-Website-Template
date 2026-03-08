@@ -7,24 +7,37 @@ require_login(); // Only admins can add users
 require_once '../includes/header.php';
 require_once '../includes/db.php';
 
+// Robust input validation and output escaping
 $error = '';
 $success = '';
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
     $email = trim($_POST['email'] ?? '');
     $role = $_POST['role'] ?? 'staff';
-    if (!$username || !$password || !$email) {
-        $error = 'All fields are required.';
+    // Validate username (letters, numbers, 3-30 chars)
+    if (!$username || !preg_match('/^[a-zA-Z0-9_\-]{3,30}$/', $username)) {
+        $error = 'Please enter a valid username (letters, numbers, 3-30 chars).';
+    } elseif (!$password || strlen($password) < 8) {
+        $error = 'Password must be at least 8 characters.';
+    } elseif (!$email || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error = 'Please enter a valid email address.';
+    } elseif (!in_array($role, ['admin', 'staff'])) {
+        $error = 'Invalid role selected.';
     } else {
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
         try {
             $stmt = $pdo->prepare('INSERT INTO users (username, password_hash, email, role) VALUES (?, ?, ?, ?)');
-            $stmt->execute([$username, $password_hash, $email, $role]);
+            $stmt->execute([
+                htmlspecialchars($username),
+                $password_hash,
+                htmlspecialchars($email),
+                htmlspecialchars($role)
+            ]);
             $success = 'User added successfully.';
         } catch (PDOException $e) {
-            $error = 'Error: ' . $e->getMessage();
+            // Generic error message for security
+            $error = 'An error occurred while adding the user.';
         }
     }
 }

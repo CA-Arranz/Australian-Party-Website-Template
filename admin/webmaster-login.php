@@ -9,12 +9,14 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
-
-    if (!$username || !$password) {
-        $error = 'Username and password are required.';
+    // Validate username (letters, numbers, 3-30 chars)
+    if (!$username || !preg_match('/^[a-zA-Z0-9_\-]{3,30}$/', $username)) {
+        $error = 'Please enter a valid username.';
+    } elseif (!$password || strlen($password) < 8) {
+        $error = 'Password must be at least 8 characters.';
     } else {
         $stmt = $pdo->prepare('SELECT id, password_hash, username FROM users WHERE username = ? AND role = "webmaster"');
-        $stmt->execute([$username]);
+        $stmt->execute([htmlspecialchars($username)]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($user && password_verify($password, $user['password_hash'])) {
             session_start();

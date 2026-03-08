@@ -10,17 +10,22 @@ $success = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
-
-    if (!$username || !$password) {
-        $error = 'Username and password are required.';
+    // Validate username (letters, numbers, 3-30 chars)
+    if (!$username || !preg_match('/^[a-zA-Z0-9_\-]{3,30}$/', $username)) {
+        $error = 'Please enter a valid username (letters, numbers, 3-30 chars).';
+    } elseif (!$password || strlen($password) < 8) {
+        $error = 'Password must be at least 8 characters.';
     } else {
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
         try {
             $stmt = $pdo->prepare('INSERT INTO users (username, password_hash, role) VALUES (?, ?, "webmaster")');
-            $stmt->execute([$username, $password_hash]);
+            $stmt->execute([
+                htmlspecialchars($username),
+                $password_hash
+            ]);
             $success = 'Webmaster account created successfully.';
         } catch (PDOException $e) {
-            $error = 'Error: ' . $e->getMessage();
+            $error = 'An error occurred while creating the account.';
         }
     }
 }

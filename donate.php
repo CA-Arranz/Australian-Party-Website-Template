@@ -33,23 +33,45 @@ require_once __DIR__.'/includes/csrf.php';
     </form>
 
     <?php
-    // Handle donation form submission
+    // Handle donation form submission with robust validation and escaping
+    $donationError = '';
+    $donationSuccess = '';
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['donor_name'], $_POST['amount'], $_POST['csrf_token'])) {
         // Validate CSRF token
-        if (csrf_check($_POST['csrf_token'])) {
-            // Store donation details in the database
-            $stmt = $pdo->prepare('INSERT INTO donations (donor_name, amount, payment_method, public_disclosure) VALUES (?, ?, ?, ?)');
-            $stmt->execute([
-                htmlspecialchars($_POST['donor_name']),
-                floatval($_POST['amount']),
-                htmlspecialchars($_POST['payment_method']),
-                intval($_POST['public_disclosure'])
-            ]);
-            echo '<p>Thank you for your donation!</p>';
+        if (!csrf_check($_POST['csrf_token'])) {
+            $donationError = 'Invalid CSRF token.';
         } else {
-            // CSRF token invalid
-            echo '<p>Invalid CSRF token.</p>';
+            $donorName = trim($_POST['donor_name']);
+            $amount = trim($_POST['amount']);
+            $paymentMethod = trim($_POST['payment_method'] ?? '');
+            $publicDisclosure = isset($_POST['public_disclosure']) ? $_POST['public_disclosure'] : '1';
+            // Validate donor name (letters, spaces, min 2, max 50)
+            if (!preg_match('/^[a-zA-Z\s\-]{2,50}$/', $donorName)) {
+                $donationError = 'Please enter a valid name (letters, spaces, 2-50 chars).';
+            } elseif (!is_numeric($amount) || floatval($amount) < 1 || floatval($amount) > 100000) {
+                $donationError = 'Please enter a valid donation amount (AUD 1-100,000).';
+            } elseif (!in_array($paymentMethod, ['cash', 'bank', 'cheque'])) {
+                $donationError = 'Invalid payment method.';
+            } elseif (!in_array($publicDisclosure, ['0', '1'])) {
+                $donationError = 'Invalid public disclosure option.';
+            } else {
+                // Store donation details in the database
+                $stmt = $pdo->prepare('INSERT INTO donations (donor_name, amount, payment_method, public_disclosure) VALUES (?, ?, ?, ?)');
+                $stmt->execute([
+                    htmlspecialchars($donorName),
+                    floatval($amount),
+                    htmlspecialchars($paymentMethod),
+                    intval($publicDisclosure)
+                ]);
+                $donationSuccess = 'Thank you for your donation!';
+            }
         }
+    }
+    if ($donationError) {
+        echo '<div class="error-message" role="alert">' . htmlspecialchars($donationError) . '</div>';
+    }
+    if ($donationSuccess) {
+        echo '<div class="success-message" role="status">' . htmlspecialchars($donationSuccess) . '</div>';
     }
     ?>
 </section>
